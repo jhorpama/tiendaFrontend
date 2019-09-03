@@ -31,7 +31,10 @@
              placeholder="precio del producto"
              ></b-form-input>
         </b-form-group>
+        <b-form-select v-model="selected" :options="options" class="mb-3">
+        </b-form-select>
         <b-button variant="outline-primary" @click="subirImagen">Agregar producto</b-button>
+        <pre>{{$data}}</pre>
      </b-card>
      <b-progress v-if="estado" class="mr-5 ml-5 mt-5" :value="value" :max="max" show-progress animated></b-progress>
    </div>
@@ -49,6 +52,15 @@
             max: 100,
             estado: false,
             precio: null,
+            selected: null,
+            options: [
+              { value: null, text: 'Por favor selecione una categoria'},
+              { value: 'Accesorios', text: 'Accesorios fitness' },
+              { value: 'Acondicionamiento', text: 'Acondicionamiento Fitness' },
+              { value: 'Camisetas', text: 'Camisetas Fitness' },
+              { value: 'Maletines', text: 'Maletines Fitness' },
+              { value: 'Pesas', text: 'Pesas Fitness' },
+            ],
           }
       },
       methods: {
@@ -73,8 +85,9 @@
             fd.append('titulo', this.titulo);
             fd.append('descripcion', this.descripcion);
             fd.append('precio', this.precio);
+            fd.append('categoria', this.selected);
              
-            axios.post('http://localhost:3000/api/producto', fd, {
+            axios.post('https://api-store-new.herokuapp.com/api/producto', fd, {
               onUploadProgress: ProgressEvent => {
                 this.estado = true
               }

@@ -40,7 +40,7 @@
           }
       },
       mounted() {
-          axios.get('http://localhost:3000/api/productos')
+          axios.get('https://api-store-new.herokuapp.com/api/productos')
                .then(res => {
                    console.log(res);
                    this.productos = res.data;
